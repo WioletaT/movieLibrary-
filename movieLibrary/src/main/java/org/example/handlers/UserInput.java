@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class UserInput {
 
    static Scanner scan = new Scanner(System.in);
-   private static int getIntigerFromUser(){
+   private static int getIntigerFromUser() {
 
        while (!scan.hasNextInt()) {
 
@@ -35,6 +35,7 @@ public class UserInput {
    }
 
    public static MenuOptions getMenuOptions() {
+
        return MenuOptions.values()[getSelectedOptionFromUser()-1];
    }
     public static Actor getActorFromUser() {

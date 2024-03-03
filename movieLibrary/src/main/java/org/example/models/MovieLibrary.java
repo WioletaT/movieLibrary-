@@ -2,9 +2,12 @@ package org.example.models;
 
 
 import org.example.handlers.RandomDataProvider;
+import org.example.handlers.UserInput;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class MovieLibrary {
 
@@ -55,7 +58,7 @@ public class MovieLibrary {
     }
 
     public void getFilmsForActor() {
-        Actor actor = UserInputHandler.getActorFromUser();
+        Actor actor = UserInput.getActorFromUser();
         List<String> actorFilmographyList = getActorFilmographyList(actor);
         if (actorFilmographyList.isEmpty()) {
             System.out.println(actor + " didn't play in any movie from library.");
@@ -68,16 +71,15 @@ public class MovieLibrary {
                 separator = ", ";
             }
         }
-
     }
     private List<String> getActorFilmographyList(Actor actorToFind) {
-        Predicate<Movie> movieCheck = movie -> movie.getListOfActors().stream()
+        Predicate<Movies> movieCheck = movie -> movie.getActors().stream()
                 .anyMatch(actor -> actor.getFirstName().equals(actorToFind.getFirstName()) &&
                         actor.getLastName().equals(actorToFind.getLastName()));
 
-        return moviesLibrary.stream()
+        return movies.stream()
                 .filter(movieCheck)
-                .map(Movie::getTitle)
+                .map(Movies::getTitle)
                 .collect(Collectors.toList());
     }
 
