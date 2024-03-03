@@ -70,6 +70,15 @@ public class MovieLibrary {
         }
 
     }
-    private List<String> getActorFilmographyList(Actor
+    private List<String> getActorFilmographyList(Actor actorToFind) {
+        Predicate<Movie> movieCheck = movie -> movie.getListOfActors().stream()
+                .anyMatch(actor -> actor.getFirstName().equals(actorToFind.getFirstName()) &&
+                        actor.getLastName().equals(actorToFind.getLastName()));
+
+        return moviesLibrary.stream()
+                .filter(movieCheck)
+                .map(Movie::getTitle)
+                .collect(Collectors.toList());
+    }
 
 }
